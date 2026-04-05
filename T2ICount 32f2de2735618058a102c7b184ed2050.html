@@ -1,0 +1,744 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>T2ICount</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32f2de27-3561-8058-a102-c7b184ed2050" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_eva_during_skylab_3.jpg" style="object-position:center 40%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">💡</span></div><h1 class="page-title" dir="auto">T2ICount</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="3352de27-3561-80b4-bec3-c83282e7ff88" class="">: enhancing Cross-modal Understanding for zero-shot Counting</h3></div><div style="display:contents" dir="auto"><h1 id="3352de27-3561-806d-a305-df5d5efc9d0b" class="">Abstract</h1></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-80ae-8bfd-f1e0313f690c" class="bulleted-list"><li style="list-style-type:disc">기존 CLIP 같은 model은 text prompt에 대한 민감성이 약하다.</li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-805c-a401-da9ad4b1dd75" class="bulleted-list"><li style="list-style-type:disc">T2ICount로 해결<div style="display:contents" dir="auto"><ul id="3352de27-3561-80bf-a9d6-f57b47e39869" class="bulleted-list"><li style="list-style-type:circle">Rich prior knowledge<div style="display:contents" dir="auto"><ul id="3352de27-3561-8096-948c-cd2609584b7b" class="bulleted-list"><li style="list-style-type:square">이미지의 다수의 객체가 모델의 text sensitivity를 가림</li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-80ee-8350-fc63d7714ab0" class="bulleted-list"><li style="list-style-type:square">reannotated subset of FSC147 → FSC147s</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-8075-9b34-c030b1da7f36" class="bulleted-list"><li style="list-style-type:circle">fine-grained understanding from pretrained diffusion model<div style="display:contents" dir="auto"><ul id="3352de27-3561-8042-ac72-eb55705abee3" class="bulleted-list"><li style="list-style-type:square">one-step denoising으로 인해 computer efficiency는 좋아지지만 text sensitivity를 떨어뜨림</li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-806d-896c-dbc7346aa99b" class="bulleted-list"><li style="list-style-type:square">HSCM (text, image 정렬 교정) + <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>R</mi><mi>R</mi><mi>C</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{RRC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">RRC</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> (Cross-attention map을 활용한 supervision signal)</li></ul></div></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><h1 id="3352de27-3561-80e2-b50b-c3aaee95ef94" class="">문제 정의</h1></div><div style="display:contents" dir="auto"><h2 id="3352de27-3561-80f7-8a83-e5c585da94bf" class="">문제 1. CLIP에서 이미지 내 객체가 다수가 아닌 text인 경우 sensitivity가 떨어져 객체 인식률이 낮아진다. </h2></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-8028-b499-f6b212a0bd6a" class="bulleted-list"><li style="list-style-type:disc">원인 : FSC-147의 evaluation bias<div style="display:contents" dir="auto"><ul id="3352de27-3561-806a-9cb5-f09e945654bb" class="bulleted-list"><li style="list-style-type:circle">FSC-147은 이미지 마다 보통 하나의 object class만 annotation</li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-8060-b2b0-f77a6ddd2aca" class="bulleted-list"><li style="list-style-type:circle">그 클래스는 대개 다수 객체 class이다. <mark class="highlight-red">그래서 모델이 진짜로 텍스트를 잘 읽어서 센 건지, 아니면 그냥 가장 많이 반복되는 물체를 센건지 구별이 잘 안간다.</mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-8066-8d13-e9da9c5152b7" class="bulleted-list"><li style="list-style-type:disc">Counting은 기본적으로 pixel-level task이지, global level에 대한 attention이 아니다.<div style="display:contents" dir="auto"><ul id="3352de27-3561-8016-b844-f536350a0227" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">global semantic level → 다수 객체</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-8064-b612-eee74ac8941d" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">local pixel level → 소수 객체 </mark></li></ul></div></li></ul></div><div style="display:contents" dir="ltr"><figure id="3352de27-3561-80a3-b97a-e1a92ce3ef52" class="image"><a href="image.png"><img style="width:240px" src="image.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-80ce-ae57-ed3a3dc44251" class="bulleted-list"><li style="list-style-type:disc">FSC-147-S를 도입하여 문제 해결<div style="display:contents" dir="auto"><ul id="3352de27-3561-8029-80b4-ee24738639dd" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">한 이미지 안에 최소 두 종류 이상 객체가 있고 원래 다수 객체가 아니라 덜 빈번한(less frequent) 클래스에 대해 추가 count annotation을 붙여서 모델이 정말 text prompt를 따라 특정 객체를 세는지 평가한다.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-80a2-9aab-e699197363e4" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">single annotation bias / majority-class bias를 더 잘 드러내기 위한 harder evaluation subset</mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><h2 id="3352de27-3561-8069-bf26-c406034b07dd" class="">문제 2. cross-attention map 시각화에서 텍스트와 무관한 영역이 강조되고, 정작 텍스트와 관련된 객체에는 attention이 일관되지 않은 text-image semantic misalignment가 나타난다. </h2></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-8014-8ad2-dac5e169dad4" class="bulleted-list"><li style="list-style-type:disc">원인: 실세계 적용, computer efficiency를 위해 사용한 single-step feature. <div style="display:contents" dir="auto"><ul id="3352de27-3561-809b-a3c6-c91663dbc570" class="bulleted-list"><li style="list-style-type:circle">이는 CLIP 자체의 global semantic bias.</li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-80cd-8c20-e8349e19a70c" class="bulleted-list"><li style="list-style-type:circle">특히 low-level feature map일 수록 noise 특성이 더 심하다.</li></ul></div><div style="display:contents" dir="ltr"><figure id="3352de27-3561-80d6-ba7d-f8830e2d8fef" class="image"><a href="image%201.png"><img style="width:432px" src="image%201.png"/></a></figure></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-808b-b8ac-f4b06c46ecf0" class="bulleted-list"><li style="list-style-type:disc">문제 해결<div style="display:contents" dir="auto"><ol type="1" id="3352de27-3561-80cb-9e51-ce1322bbe640" class="numbered-list" start="1"><li>Hierarchical Semantic Correction Module(HSCM) <mark class="highlight-red">: 점진적인 semantic-visual discrepancy를 보정한다.(multi-scale feature rectification)</mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3352de27-3561-80e5-8443-f2e865cb5d55" class="numbered-list" start="2"><li>Representaional Regional Coherence Loss(<style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>R</mi><mi>R</mi><mi>C</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{RRC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">RRC</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>) : <mark class="highlight-red">cross-modal alignment를 강화한다. </mark></li></ol></div></li></ul></div><div style="display:contents" dir="auto"><h1 id="3362de27-3561-803e-a2cc-e394e923cc01" class="">Methodology</h1></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80b7-9f85-f20742a14450" class="bulleted-list"><li style="list-style-type:disc">목표 : <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>f</mi><mo>:</mo><mi>X</mi><mo>×</mo><mi>T</mi><mo>→</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">d=f(x,c), f:X×T→D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span></span><span>﻿</span></span> 이미지 공간 X와 텍스트 공간 T로부터 density map 공간 D로 매핑하는 함수를 학습하고자 한다. </li></ul></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-806a-b9da-c3e625bfc49e" class="image"><a href="image%202.png"><img style="width:544.7625122070312px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><div id="3362de27-3561-807f-b759-e33dcc72c078" class="column-list"><div style="display:contents" dir="auto"><div id="3362de27-3561-8087-997f-db171b51b826" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="3362de27-3561-80e7-8ea4-f395f5c06b59" class="bulleted-list"><li style="list-style-type:disc">VAE Encoder<div style="display:contents" dir="auto"><ul id="3362de27-3561-8007-a4a1-e2dea0068819" class="bulleted-list"><li style="list-style-type:circle">입력 : x 이미지</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8065-8539-cb07b846682d" class="bulleted-list"><li style="list-style-type:circle">출력 : latent 분포 정보(<style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\mu , \sigma^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0085em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">μ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>) 에서 sampling 한 <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></span><span>﻿</span></span></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8053-b7af-fde871a23591" class="bulleted-list"><li style="list-style-type:circle">역할 : VAE는 이미지를 더 작은 latent 공간으로 압축해서, diffusion이 원본 이미지 공간이 아니라 복원 가능한 compact latent space에서 효율적으로 동작하게 해준다.</li></ul></div></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="3362de27-3561-8001-9017-edccabd197cc" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="3362de27-3561-8086-ae67-ddaa357efd24" class="bulleted-list"><li style="list-style-type:disc">forward diffusion process<div style="display:contents" dir="auto"><ul id="3362de27-3561-80d6-a043-cb02d5383bf9" class="bulleted-list"><li style="list-style-type:circle">입력 : z</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8060-b448-e5885425bbd6" class="bulleted-list"><li style="list-style-type:circle">출력 : noisy latent <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">z_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><div style="display:contents" dir="ltr"><figure id="3362de27-3561-8034-8e62-e066c639310d" class="image"><a href="image%203.png"><img style="width:144px" src="image%203.png"/></a></figure></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-801c-8d5f-dfcfa8024944" class="bulleted-list"><li style="list-style-type:circle">역할 : denoising U-net이 <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">z_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>를 보고 어떤 노이즈가 섞였는지 예측하고 제거하는 법을 배우기 위해 앞단에서 forward diffusing으로 노이즈를 t=1로 추가하는 과정.</li></ul></div></li></ul></div></div></div></div></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8025-bbd9-fc312f817472" class="bulleted-list"><li style="list-style-type:disc">Text Encoder<div style="display:contents" dir="auto"><ul id="3362de27-3561-801e-903f-da47d5466721" class="bulleted-list"><li style="list-style-type:circle">입력 : 텍스트 프롬프트 c</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80b8-a941-c74af91d0079" class="bulleted-list"><li style="list-style-type:circle">출력 : 텍스트 feature c’</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8090-9a26-ec90b1c5803b" class="bulleted-list"><li style="list-style-type:circle">역할 : 텍스트가 어떤 시각적 의미와 대응하는지를 담은 text vector를 출력하는 모듈이다. <div style="display:contents" dir="ltr"><figure id="3362de27-3561-8019-b0f6-f04278353d30" class="image"><a href="image%204.png"><img style="width:336px" src="image%204.png"/></a></figure></div></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80a1-88da-eacec8528b04" class="bulleted-list"><li style="list-style-type:disc">stable diffusion - Denoising U-net<div style="display:contents" dir="auto"><ul id="3362de27-3561-80e8-a98c-e071abbc5c8b" class="bulleted-list"><li style="list-style-type:circle">입력<div style="display:contents" dir="auto"><ul id="3362de27-3561-80b9-8188-fe76b7d091b8" class="bulleted-list"><li style="list-style-type:square">noisy latent <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">z_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> </li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8082-8d35-da2f312e2b87" class="bulleted-list"><li style="list-style-type:square">text feature c’</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8010-a4ba-e477d1acc88e" class="bulleted-list"><li style="list-style-type:circle">출력<div style="display:contents" dir="auto"><ul id="3362de27-3561-80cd-8b34-e91e555f370b" class="bulleted-list"><li style="list-style-type:square">예측된 noise <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϵ</mi><mi>θ</mi></msub></mrow><annotation encoding="application/x-tex">\epsilon_{\theta}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">ϵ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-807e-9bbe-f7d189628315" class="bulleted-list"><li style="list-style-type:square">U-net 내부 decoder에서 나온 multi-scale feature map <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>F</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>F</mi><mn>3</mn></msub><mo separator="true">,</mo><msub><mi>F</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">F_1, F_2, F_3, F_4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80b4-ab34-cc8ce312d176" class="bulleted-list"><li style="list-style-type:square">cross attention map</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-808b-b7f7-cf18db0a28c3" class="bulleted-list"><li style="list-style-type:circle">역할 : noisy latent <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">z_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>에서 텍스트 조건 c’을 반영하여 noise <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϵ</mi><mi>θ</mi></msub></mrow><annotation encoding="application/x-tex">\epsilon_{\theta}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">ϵ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>를 예측하여 제거하고 text-image alignment를 조정한다. single-step denoising에서 얻은 feature 들을 꺼내서 counting 용 feature extractor 역할을 한다. </li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80b8-9d66-ffca95e73f77" class="bulleted-list"><li style="list-style-type:disc">HSCM<div style="display:contents" dir="auto"><ul id="3362de27-3561-80ea-9f6f-c02e554486e8" class="bulleted-list"><li style="list-style-type:circle">입력<div style="display:contents" dir="auto"><ul id="3362de27-3561-80f4-a1a3-c1b9bf2fc046" class="bulleted-list"><li style="list-style-type:square">multi-scale feature map <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>F</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>F</mi><mn>3</mn></msub><mo separator="true">,</mo><msub><mi>F</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">F_1, F_2, F_3, F_4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-808f-833d-e2044914d4dc" class="bulleted-list"><li style="list-style-type:square">text feature c’</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80bb-99d4-f5c92a647fa2" class="bulleted-list"><li style="list-style-type:circle">출력<div style="display:contents" dir="auto"><ul id="3362de27-3561-80dc-8b66-d1bba97ebf69" class="bulleted-list"><li style="list-style-type:square">text aligned feature <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">V_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8077-992b-eab369acd210" class="bulleted-list"><li style="list-style-type:circle">역할 : diffusion의 single-step feature에서 부족해진 text-image alignment를 단계적으로 보정해서, 모델이 텍스트가 가리키는 객체를 더 정확히 보며 counting하도록 돕는 모듈이다.</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-803c-b4c6-c59d68e1b269" class="bulleted-list"><li style="list-style-type:disc">위의 모듈들을 기반으로 네트워크를 decompose 하면 <br/><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mi>G</mi><mo stretchy="false">(</mo><mi>H</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>Q</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>Q</mi><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>→</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">f = G(H(x,Q(c)),Q(c))→D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">G</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">Q</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mclose">))</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">Q</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mclose">))</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span></span><span>﻿</span></span><div style="display:contents" dir="auto"><ul id="3362de27-3561-8019-9d30-e2c2908ef9d8" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mo>:</mo><mi>T</mi><mo>→</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">Q:T→C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></span><span>﻿</span></span> 는 CLIP text encoder</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80d8-af14-c97149440625" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>:</mo><mi>X</mi><mo>×</mo><mi>C</mi><mo>→</mo><mi>F</mi></mrow><annotation encoding="application/x-tex">H:X×C→F</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span></span></span></span></span><span>﻿</span></span>는 <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϵ</mi><mi>θ</mi></msub></mrow><annotation encoding="application/x-tex">\epsilon_\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">ϵ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>(denoising U-Net)</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80be-a3f9-f2ab25a6f097" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>:</mo><mi>F</mi><mo>×</mo><mi>C</mi><mo>→</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">G:F×C→D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span></span><span>﻿</span></span>는 이후 density map으로 가는 부분</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><h2 id="3362de27-3561-80cc-b677-e526c7066bfa" class="">Text Intensitivity in Single-step Denoising</h2></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-80d7-aba9-f6aa58b0914a" class="image"><a href="image%205.png"><img style="width:527.9750366210938px" src="image%205.png"/></a><figcaption>t=1 일 때, denoising U-net의 서로 다른 해상도 계층에서 나온 Cross-attention map</figcaption></figure></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8094-b2a2-c3ed0724391b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">single-step, 특히 t=1 에서는 이미지 원형은 잘 유지되지만 텍스트 조건이 충분히 반영되지 않아, cross-attention이 객체 의미보다 배경/텍스트/반복 패턴에 흔들리고, 그 결과 텍스트가 지정한 객체를 정확히 세기 어려워진다.</mark><div style="display:contents" dir="auto"><ul id="3362de27-3561-80f2-8388-f13aa956ff32" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">t=1의 의미 : forward 관점에서는 </mark><mark class="highlight-red"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mn>0</mn></msub><mo>→</mo><msub><mi>z</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">z_0 →z_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-red"> , 즉 아주 약하게 노이즈가 섞인 상태이다. 이후 denoising U-net에서 reverse 과정을 거쳐 </mark><mark class="highlight-red"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">z_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-red">의 노이즈를 예측하는 한 번의 denosing step을 본다는 뜻이다.</mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-802e-b337-ceb1599c5c1a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">이유 : Multi-step의 denoising 과정에서 text 정보가 점진적으로 반영되어 정제가능하지만 Single-step에서는 그것이 어렵다. computing efficiency와 text-image alignment의 trade-off 관계에서 computing efficiency를 선택(single-step)</mark></li></ul></div><div style="display:contents" dir="auto"><h2 id="3362de27-3561-804e-b270-e8378ebced5d" class="">Hierachical Semantic Correction Module(HSCM)</h2></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-802f-b807-c9a6a16251a7" class="image"><a href="image%206.png"><img style="width:336px" src="image%206.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80e4-938f-ff5c8b6705b7" class="bulleted-list"><li style="list-style-type:disc">Cascaded design : counting을 위한 점진적 text-image alignment 과정<div style="display:contents" dir="auto"><ul id="3362de27-3561-80cd-b60d-caebeb216f46" class="bulleted-list"><li style="list-style-type:circle">fused feature map : <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>F</mi><mi>i</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup></mrow><annotation encoding="application/x-tex">F_i&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0106em;vertical-align:-0.2587em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-2.4413em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2587em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> <div style="display:contents" dir="ltr"><figure id="3362de27-3561-80b5-842b-db75bcecefd8" class="image"><a href="image%207.png"><img style="width:240px" src="image%207.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-8038-9a65-d5c87977a2c7" class="image"><a href="image%208.png"><img style="width:336px" src="image%208.png"/></a></figure></div></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><h3 id="3362de27-3561-8085-814f-e0130cf4040e" class="">Semantic Enhancement Module(SEM)</h3></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80dc-b61b-e19a26b29797" class="bulleted-list"><li style="list-style-type:disc">SEM은 feature를 text-aware하게 만드는 모듈</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-807a-8728-f9266f23f5ea" class="bulleted-list"><li style="list-style-type:disc">text-to-image attention 과 image-to-text attention으로 bidirectional cross-modal interaction을 수행하여 enhanced feature map <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">V_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>를 만든다. </li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80b6-ae7a-f996945cfd70" class="bulleted-list"><li style="list-style-type:disc">그리고 <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">V_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>와 text feature c’ 으로 Text-image similarity map을 만든다. </li></ul></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-801c-9e52-e4b0e64a77e0" class="image"><a href="image%209.png"><img style="width:120px" src="image%209.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80d8-bfd5-e0bf60bdb862" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>R</mi><mi>R</mi><mi>C</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{RRC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">RRC</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><mark class="highlight-red">의 지도를 받아, SEM은 </mark><mark class="highlight-red"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">S_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-red">를 학습하는데, 이 map은 특정 class의 객체가 있는 영역을 segmentation mask처럼 잡아내도록 유도된다. 이 mask는 의미적으로 관련 영역들을 highlight하기 위해 SCM에서 attention guidance로 사용된다.</mark></li></ul></div><div style="display:contents" dir="auto"><h3 id="3362de27-3561-807d-8e08-c3ae2f829d89" class="">Semantic Correction Module </h3></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-806b-8828-cea3cfbab20f" class="bulleted-list"><li style="list-style-type:disc">SCM은 이전 단계의 similarity map을 반영하여 feature representation을  보정해주는 모듈.</li></ul></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-80ff-9844-fbcc356e42fd" class="image"><a href="image%2010.png"><img style="width:240px" src="image%2010.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8010-8418-fbbb974377d1" class="bulleted-list"><li style="list-style-type:disc">모델의 attention을 text관련 영역들에 redirect 해주고, counting density map 학습을 돕는다.</li></ul></div><div style="display:contents" dir="auto"><h3 id="3362de27-3561-8094-ab56-c98b745c0e51" class="">Representational Regional Coherence Loss(<style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>R</mi><mi>R</mi><mi>C</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{RRC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">RRC</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>)</h3></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8005-b710-f48c7a9636b0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">FSC-147 dataset이 point-level annotation으로 부터의 positive &amp; negative sample로 이루어져 있다 보니. instance 수준의 annotation이 부족하다. </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8014-812a-f5081be43e95" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">single-step annotation map은 텍스트가 가키는 특정 객체 종류를 정확히 구분하는 능력은 약하지만 이미지 속에서 물체가 전체적인  foreground 영역은 비교적 잘 잡아낸다. 이러한 점에서 착안해 이 attention map을 background 픽셀을 가려내는 데 활용한다.</mark></li></ul></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-80b4-9e22-f09153b90e60" class="image"><a href="image%2011.png"><img style="width:482.9926452636719px" src="image%2011.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-807e-9c86-c7f703d0f26e" class="bulleted-list"><li style="list-style-type:disc">과정<div style="display:contents" dir="auto"><ol type="1" id="3362de27-3561-808b-a8dd-dc97d2ce0a9d" class="numbered-list" start="1"><li>denoising U-Net에서 서로 다른 해상도의 Cross-attention map <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>A</mi><mi>i</mi><mrow><mi>c</mi><mi>r</mi><mi>o</mi><mi>s</mi><mi>s</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">A^{cross}_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.942em;vertical-align:-0.2587em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-2.4413em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">cross</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2587em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>를 뽑는다.(48x48, 24x24, 12x12)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3362de27-3561-80c0-9c44-e461c52d6099" class="numbered-list" start="2"><li>이들을 upsampling 해서 같은 해상도로 맞춰준 뒤, 가중합해서 하나의 fused attention map을 만든다. 즉, 여러 해상도에서 얻은 attention 정보를 합쳐서 하나의 foreground-like map을 만든다.<div style="display:contents" dir="ltr"><figure id="3362de27-3561-809a-b1f4-cbb4971dd011" class="image"><a href="image%2012.png"><img style="width:336px" src="image%2012.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3362de27-3561-80e4-9875-f2d9596c4bc5" class="numbered-list" start="3"><li><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mrow><mi>c</mi><mi>r</mi><mi>o</mi><mi>s</mi><mi>s</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A^{cross}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">cross</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>와 GT density map <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>D</mi><mrow><mi>g</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">D^{gt}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7936em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7936em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">t</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>를 같이 써서 PNA(Positive-Negative-Ambiguous) map을 만든다.<div style="display:contents" dir="auto"><ul id="3362de27-3561-804f-b755-ce8dfdf55c47" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>D</mi><mrow><mi>g</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">D^{gt}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7936em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7936em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">t</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> : counting datset에는 보통 객체 위치에 대한 point annotation이 있는데 각 객체 중심점 근처에 가우시안 분포를 퍼뜨려서 2D map 형태의 정답을 만든다.</li></ul></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-808f-b538-d7385f05df5f" class="image"><a href="image%2013.png"><img style="width:432px" src="image%2013.png"/></a></figure></div></li></ol></div></li></ul></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-8088-aff7-e8507fd151bc" class="image"><a href="image%2014.png"><img style="width:480px" src="image%2014.png"/></a><figcaption>(e)를 보면 전경 영역을 잘 잡아내는 것을 알 수 있다. (f) 흰색: 1 , 회색:-1, 검은색:0</figcaption></figure></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-804d-ba88-c913ff05dbfc" class="image"><a href="image%2015.png"><img style="width:562.75px" src="image%2015.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="3362de27-3561-8070-ac44-e5423447d243" class="">Loss 정의</h2></div><div style="display:contents" dir="ltr"><figure id="3362de27-3561-80b3-9bab-dfc6f5b2861a" class="image"><a href="image%2016.png"><img style="width:240px" src="image%2016.png"/></a></figure></div><div style="display:contents" dir="auto"><div id="3362de27-3561-800d-83e2-c8d397acda50" class="column-list"><div style="display:contents" dir="auto"><div id="3362de27-3561-8055-90f2-fa7c972b0c49" style="width:68.75%" class="column"><div style="display:contents" dir="auto"><ul id="3362de27-3561-80fe-b8d1-fddf7e89d4c2" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>r</mi><mi>e</mi><mi>g</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{reg}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> : regression Loss로 counting 자체를 잘 하게 만드는 기본 loss로 density map이 정답 density map과 비슷해지도록 학습하기 위함이다.</li></ul></div></div></div><div style="display:contents" dir="auto"><div id="3362de27-3561-80dc-b65b-f87c79830422" style="width:31.25%" class="column"><div style="display:contents" dir="ltr"><figure id="3362de27-3561-8021-aeaa-e4a4883e6e9c" class="image"><a href="image%2017.png"><img style="width:482.98529052734375px" src="image%2017.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="3352de27-3561-80a2-a1b1-e40e9f54320d"/></div><div style="display:contents" dir="auto"><h1 id="32f2de27-3561-80b1-94e7-c49cc0f68157" class="">Appendix</h1></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8061-8acb-fea737724d7e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">Few-shot object Counting</mark> : 몇 개의 예시만 보고 같은 종류의 물체가 이미지에 몇 개 있는지 세는 문제이다. 직접 제공한 examplar에 의존하는 경향이 있다.<div style="display:contents" dir="auto"><ul id="3362de27-3561-806c-a892-d39a2a1dd052" class="bulleted-list"><li style="list-style-type:circle">examplar 확보 비용이 크다.</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8096-96f6-d832fda1a1e7" class="bulleted-list"><li style="list-style-type:circle">target object의 다양성과 변동성을 완전히 포착할 수 있다. 이 때문에 bias를 초래할 수 있다. </li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-8063-9ddb-d577eb99bc20" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">zero-shot</mark> : 모델이 학습 때 직접 보지 못한 대상이나 클래스도, 추가 예시나 재학습 없이 처리하는 방식.<div style="display:contents" dir="auto"><ul id="3352de27-3561-80d8-afff-f501e740a5d0" class="bulleted-list"><li style="list-style-type:circle">이를 처리하기 위해 CLIP을 사용한다. → Visual과 text condition의 semantic alignment gap을 줄이기 위함</li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-80f3-b711-ffda3858a0c1" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow_background">text-guided local semantic</mark>(text to image diffusion model) : 노이즈를 제거하는 과정에서 이미지 feature가 텍스트 조건에 맞게 계속 조정된다.<div style="display:contents" dir="auto"><ul id="3352de27-3561-8019-a11a-d7c8d43a0e53" class="bulleted-list"><li style="list-style-type:square">multi-step : 실세계에 대한 다양하고 보지 못한 category에 대한 일반화 성능이 높은 반면 computational overhead가 크다.</li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-80c3-a216-dc4cd863a58e" class="bulleted-list"><li style="list-style-type:square">one-step : text-awarness가 떨어지는 반면 computational efficiency가 높다. → HSCM으로 약해진 text-image interaction 보완.</li></ul></div></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3352de27-3561-803f-bd86-c61f98400966" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">Cross attention-map</mark> : 텍스트의 어떤 단어를 보면서 이미지의 어느 위치에 주목하는지를 보여주는 공간적 heatmap. 이는 텍스트와 이미지처럼 서로 다른 정보 사이의 대응 관계를 계산해서 한 쪽이 다른 쪽의 중요한 부분을 선택적으로 참고하도록 하는 매커니즘</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-809c-b050-f654b55b7ee8" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">density map</mark> : 이미지 각 위치에서 대상 객체가 얼마나 밀집해 있는지를 연속적인 값으로 나타낸 2차원 함수(또는 맵)</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80f0-91f6-f347b70a6b96" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">misalignment</mark> : 텍스트가 가르키는 대상과, attention map이 실제로 밝게 보는 위치가 잘 맞지 않는다. </li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-8013-88be-fe9b13f49b15" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">diffusion model</mark> : 데이터에 점점 노이즈를 섞는 과정과, 그 노이즈를 다시 제거하는 과정을 학습해서 데이터를 생성하는 확률 생성 모델이다.<div style="display:contents" dir="auto"><ul id="3362de27-3561-80c1-93bb-fc5cc5e1bb42" class="bulleted-list"><li style="list-style-type:circle">forward diffusion : 원래 데이터(예: 이미지)에 노이즈를 조금씩 추가해서 결국 거의 순수한 잡음으로 만듦 <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>→</mo><msub><mi>x</mi><mn>1</mn></msub><mo>→</mo><msub><mi>x</mi><mn>2</mn></msub><mo>→</mo><mo>⋯</mo><mo>→</mo><msub><mi>x</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">x_0→x_1→x_2→⋯→x_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-808b-988d-d8018d258b19" class="bulleted-list"><li style="list-style-type:circle">reverse diffusion : 그 잡음으로부터 노이즈를 조금씩 제거하면서 원래 데이터와 비슷한 샘플을 복원한다. <style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>T</mi></msub><mo>→</mo><msub><mi>x</mi><mrow><mi>T</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>→</mo><mo>⋯</mo><mo>→</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">x_T→x_{T-1}→⋯→x_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80fa-af8c-eb8580bf639f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">FSC-147</mark> : Few-Shot Counting-147의 약자로, few-shot / class-agnostic object counting을 위해 제안된 데이터셋이야. 전체 6,135장 이미지, 147개 시각 카테고리로 이루어져 있고, 주방용품·문구류·차량·동물처럼 일상적인 다양한 물체를 포함되어 있다. <div style="display:contents" dir="auto"><ul id="3362de27-3561-8014-b000-c346ea96d86a" class="bulleted-list"><li style="list-style-type:circle">분할(split): train / val / test가 클래스 기준으로 완전히 분리되어 있어. 구체적으로 89 / 29 / 29개 클래스, 3,659 / 1,286 / 1,190장 이미지로 나뉜다. 그래서 학습 때 본 적 없는 클래스에 대해 일반화 성능을 보기 좋다.</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-808f-b4bd-c09b6c1fdca4" class="bulleted-list"><li style="list-style-type:circle">어노테이션(annotation): 각 이미지에는 타깃 객체의 모든 인스턴스에 대한 dot annotation이 있고, 그중 임의의 3개 exemplar에는 axis-aligned bounding box가 제공된다. 즉, “무엇을 셀지”를 exemplar box로 지정하고, 전체 개수는 density/dot 기반으로 학습하는 구조야.</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80a1-bbf1-d8b1699f6bfb" class="bulleted-list"><li style="list-style-type:circle">카운트 범위: 이미지당 객체 수가 7개에서 3,731개까지 매우 넓고, 평균 56개 정도라서 쉬운 샘플과 매우 조밀한 샘플이 함께 있다.</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80e4-accc-e2421f8a451f" class="bulleted-list"><li style="list-style-type:circle">수집 방식: 웹에서 후보 이미지를 모은 뒤, 고해상도, 최소 7개 이상 객체, 비슷한 외형, 심한 가림 없음 같은 기준으로 수작업 필터링해 만들었다.</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80dc-bc68-d31f0ca3181c" class="bulleted-list"><li style="list-style-type:circle">특징<div style="display:contents" dir="auto"><ul id="3362de27-3561-802a-9283-cf9f109de436" class="bulleted-list"><li style="list-style-type:square">원래 목적은 few-shot counting이라서, 한 이미지 안에 여러 물체 종류가 있더라도 정답은 보통 한 개 카테고리만 지정된다. 그래서 다른 카테고리 객체가 이미지 안에 있어도 정식 타깃으로는 라벨링되지 않을 수 있다.</li></ul></div><div style="display:contents" dir="auto"><ul id="3362de27-3561-80d7-ade9-d0269493dd40" class="bulleted-list"><li style="list-style-type:square">후속 연구들은 FSC-147가 대체로 단순한 장면, 두드러진 주 객체, 평범한 배경을 많이 포함해서, 특히 text-guided zero-shot counting에서는 프롬프트 민감도를 엄격하게 평가하기엔 한계가 있다고 지적하기도 했다.</li></ul></div></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><p id="3362de27-3561-8049-8d80-c4c71c99313a" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
