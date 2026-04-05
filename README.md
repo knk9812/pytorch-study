@@ -1,4 +1,4 @@
-# PyTorch Study Log
+# PyTorch Study
 
 인프런 PyTorch 강의를 기반으로 공부한 내용을 기록하는 레포지토리입니다.
 
